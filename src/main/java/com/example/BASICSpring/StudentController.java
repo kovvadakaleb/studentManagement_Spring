@@ -1,40 +1,39 @@
 package com.example.BASICSpring;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
 @RestController
-
+@RequestMapping("/student")
 public class StudentController {
 
-    HashMap<Integer,Student> db = new HashMap<>();
+   @Autowired
+   StudentService service;
 
     @GetMapping("/get/{id}")
     public Student getStudent(@PathVariable("id")  int regno){
-        System.out.println("you receive your details"+db);
-        return db.get(regno);
+        return service.getStudent(regno);
     }
 
-    @PostMapping("/add")
-    public String addStudent(@RequestBody Student student){
-
-
-        db.put(student.getRegno(),student);
-        System.out.println("current-db "+db);
-        return "Student added Successfully";
-
+   @PostMapping("/add")
+    public String addStudent(@RequestBody Student student) {
+      return service.addStudent(student);
     }
+
+    @PutMapping("/update-course/{course}")
+    public String updateCourse(@PathVariable("course") String course,@RequestParam("q1") int regno ){
+        return service.updateCourse(regno,course);
+    }
+
     @DeleteMapping("/delete/{id}")
     public String deleteStudent(@PathVariable("id") int regno){
-       db.remove(regno);
+        return service.deleteStudent(regno);
+    }
 
-        return "Student delete successfully";
-    }
-    @PutMapping("/updatePhone")
-    public String updateStudent(@RequestBody Student student){
-        db.get(student.getRegno()).setCourse(student.getCourse());
-        db.get(student.getRegno()).setPhoneno(student.getPhoneno());
-        return "Student Details updated Successfully";
-    }
 }
+
+
+
+
