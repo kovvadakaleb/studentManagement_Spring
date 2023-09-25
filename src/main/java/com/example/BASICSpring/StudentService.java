@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 public class StudentService {
 
     @Autowired
-    StudentRepository repository;
-    public Student getStudent(int regno) {
+    static StudentRepository repository;
+    public static Student getStudent(int regno) {
         return repository.getStudent(regno);
     }
 
-    public String addStudent(Student student) {
+    public static String addStudent(Student student) {
         return repository.addStudent(student);
     }
 
